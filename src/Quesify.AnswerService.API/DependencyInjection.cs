@@ -72,7 +72,6 @@ public static class DependencyInjection
 
         services.AddTransient<QuestionCreatedIntegrationEventHandler>();
 
-
         return services;
     }
 }
