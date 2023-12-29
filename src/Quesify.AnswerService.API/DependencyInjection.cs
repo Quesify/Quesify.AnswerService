@@ -6,6 +6,7 @@ using Quesify.SharedKernel.AspNetCore.Swagger.Filters;
 using Quesify.SharedKernel.Utilities.Guards;
 using Serilog;
 using Serilog.Events;
+using Steeltoe.Discovery.Client;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -14,9 +15,9 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class DependencyInjection
 {
     public static IServiceCollection AddWebServices(
-      this IServiceCollection services,
-      IConfiguration configuration,
-      ConfigureHostBuilder hostBuilder)
+        this IServiceCollection services,
+        IConfiguration configuration,
+        ConfigureHostBuilder hostBuilder)
     {
         Guard.Against.Null(services, nameof(services));
         Guard.Against.Null(configuration, nameof(configuration));
@@ -71,6 +72,8 @@ public static class DependencyInjection
         services.AddCustomExceptionHandler();
 
         services.AddTransient<QuestionCreatedIntegrationEventHandler>();
+
+        services.AddDiscoveryClient(configuration);
 
         return services;
     }
